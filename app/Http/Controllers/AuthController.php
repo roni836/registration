@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -59,7 +60,9 @@ class AuthController extends Controller
 
     public function dashboard()
     {
-        return view('dashboard', ['user' => Auth::user()]);
+        // return view('dashboard', ['user' => Auth::user()]);
+        $tasks = Task::where('user_id', auth()->id())->get();
+        return view('dashboard', ['name' => auth()->user()->name, 'tasks' => $tasks]);
     }
 
     public function registerForm()
